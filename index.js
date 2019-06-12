@@ -17,8 +17,13 @@ const s3 = new aws.S3();
 const bucket = process.env.BUCKET;
 const rootPath = process.env.FOLDER + '/';
 
-if (!process.env.ACCESS_KEY_ID && !process.env.SECRET_ACCESS_KEY && !process.env.BUCKET && !process.env.FOLDER) {
-    throw 'specify access key, secret access key, bucket, and folder name'
+if (
+    !process.env.ACCESS_KEY_ID &&
+    !process.env.SECRET_ACCESS_KEY &&
+    !process.env.BUCKET &&
+    !process.env.FOLDER
+) {
+    throw 'specify access key, secret access key, bucket, and folder name';
 }
 
 const fileUrls = [];
@@ -67,7 +72,7 @@ let result = [];
 (async () => {
     try {
         if (fileUrls.length === 0 && !_.isString(filePath)) {
-            throw 'no url or file specified'
+            throw 'no url or file specified';
         }
 
         if (_.isString(filePath)) {
@@ -86,35 +91,33 @@ let result = [];
         } else {
             for (let i = 0; i < fileUrls.length; i++) {
                 console.log(i + '/' + fileUrls.length);
-                const file = await promisify(downloadFileFromURL)(fileUrls[i].url);
-                const fileName = _.isString(fileUrls[i].name) ? _.isString(fileUrls[i].name) : i.toString();
-    
+                const file = await promisify(downloadFileFromURL)(
+                    fileUrls[i].url
+                );
+                const fileName = _.isString(fileUrls[i].name)
+                    ? _.isString(fileUrls[i].name)
+                    : i.toString();
+
                 const s3FileOptions = {
                     path: fileName,
                     content_type: 'image/jpeg',
                     is_public: IS_PUBLIC,
                     content: file
                 };
-    
+
                 const s3Response = await uploadFile(s3FileOptions);
                 result.push(s3Response);
             }
         }
 
-        await fs.writeFileSync(
-            'result.txt',
-            JSON.stringify(result, null, 2)
-        );
+        await fs.writeFileSync('result.txt', JSON.stringify(result, null, 2));
 
         console.log('done');
     } catch (e) {
         result.push(e);
         console.log(e);
 
-        await fs.writeFileSync(
-            'result.txt',
-            JSON.stringify(result, null, 2)
-        );
+        await fs.writeFileSync('result.txt', JSON.stringify(result, null, 2));
 
         console.log('exit with error, please check your log in result.txt');
     }
