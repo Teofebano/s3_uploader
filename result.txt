@@ -1,0 +1,11 @@
+[
+  {
+    "ETag": "\"8bb669592caff1f67e2d8421bf176e42\"",
+    "ServerSideEncryption": "aws:kms",
+    "SSEKMSKeyId": "arn:aws:kms:ap-southeast-1:985445437615:key/cec39944-39c3-4634-9bf7-bdefb1a05db6",
+    "Location": "https://iluma-customer-pii-files.s3.ap-southeast-1.amazonaws.com/testing/testing",
+    "key": "testing/testing",
+    "Key": "testing/testing",
+    "Bucket": "iluma-customer-pii-files"
+  }
+]
