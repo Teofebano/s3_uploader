@@ -759,6 +759,7 @@ const arr = [
 (async () => {
     console.log('lala');
     console.log('hoho');
+    console.log('aviator wohoo');
     const result = _.sortBy(arr, function (e) { return e.length });
     await fs.writeFileSync('hmm.txt', JSON.stringify(result, null, 2));
 })();
